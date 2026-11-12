@@ -101,3 +101,22 @@ alabaster
 .idea/
 temp/
 .claude/
+
+# Private local configuration and email collaboration state
+.env.*
+!.env.example
+*.db
+*.db-*
+*.sqlite
+*.sqlite-*
+*.sqlite3
+*.sqlite3-*
+*.eml
+*.msg
+*.pem
+*.key
+/email_collaboration/
+/email_pp/
+/acceptance/
+/backups/
+/private-evidence/

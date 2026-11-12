@@ -1,6 +1,6 @@
 [project]
 name = "hermes-email-pp"
-version = "0.5.3"
+version = "0.6.0.dev3"
 description = "Better email adapter for Hermes Agent."
 authors = [
     { name = "Josef Nevrly", email = "josef.nevrly@gmail.com" }
@@ -48,6 +48,7 @@ source = ["hermes_email_pp"]
 relative_files = true
 
 [tool.pytest.ini_options]
+addopts = "--confcutdir=tests"
 norecursedirs = [".release-venv", ".venv", "venv", "ENV", "build", "dist"]
 
 [tool.coverage.report]

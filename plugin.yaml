@@ -1,9 +1,11 @@
 name: email-pp
 label: Email++
 kind: platform
-version: 0.5.3
-description: IMAP and SMTP gateway adapter with per-thread email routing.
+version: 0.6.0.dev3
+description: Threaded group-email collaboration with private owner coordination.
 author: Josef Nevrly
+provides_tools:
+  - email_ask_owner
 requires_env:
   - name: EMAIL_PP_ADDRESS
     description: Agent mailbox address and SMTP envelope identity.
@@ -21,6 +23,14 @@ requires_env:
     description: "Enter false to keep the secure default. WARNING: true accepts every non-automated sender and bypasses allowlist and sender-authentication checks."
     password: false
 optional_env:
+  - name: EMAIL_PP_COLLABORATION
+    description: "Enable explicit collaboration requests with private coordination; default false."
+  - name: EMAIL_PP_BACKCHANNEL_TARGET
+    description: "Private Hermes destination, platform:chat_id."
+  - name: EMAIL_PP_BACKCHANNEL_OWNER
+    description: "Authenticated owner user ID in the private backchannel."
+  - name: EMAIL_PP_LOGIN
+    description: "Mailbox authentication username; may differ from the From alias."
   - name: EMAIL_PP_IMAP_PORT
     description: "IMAP-over-TLS port. Default: 993."
   - name: EMAIL_PP_SMTP_PORT

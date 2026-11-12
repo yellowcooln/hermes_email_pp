@@ -14,6 +14,10 @@ REQUIRED_ENV = (
 )
 
 OPTIONAL_ENV = (
+    "EMAIL_PP_LOGIN",
+    "EMAIL_PP_COLLABORATION",
+    "EMAIL_PP_BACKCHANNEL_TARGET",
+    "EMAIL_PP_BACKCHANNEL_OWNER",
     "EMAIL_PP_IMAP_PORT",
     "EMAIL_PP_SMTP_PORT",
     "EMAIL_PP_SENDER_NAME",
@@ -37,6 +41,38 @@ CHANNEL_REQUIRED_ENV = (*REQUIRED_ENV, "EMAIL_PP_ALLOW_ALL_USERS")
 # Metadata consumed by vanilla Hermes' OPTIONAL_ENV_VARS registry. The stock
 # Channels card renders each entry as a text or password input.
 CHANNEL_ENV = (
+    {
+        "name": "EMAIL_PP_COLLABORATION",
+        "prompt": "Collaboration mode",
+        "description": (
+            "Enter true for explicit requests, reply-all and private coordination. "
+            "Default false preserves legacy behavior."
+        ),
+    },
+    {
+        "name": "EMAIL_PP_BACKCHANNEL_TARGET",
+        "prompt": "Private notification target",
+        "description": (
+            "Explicit existing Hermes target, such as telegram:123 or discord:123; "
+            "configure a private destination."
+        ),
+    },
+    {
+        "name": "EMAIL_PP_BACKCHANNEL_OWNER",
+        "prompt": "Private owner user ID",
+        "description": (
+            "Authenticated user ID authorized to answer email questions "
+            "in the selected private chat."
+        ),
+    },
+    {
+        "name": "EMAIL_PP_LOGIN",
+        "prompt": "Mailbox login",
+        "description": (
+            "Authentication username; defaults to the From address. "
+            "Set the underlying mailbox when sending as an alias."
+        ),
+    },
     {
         "name": "EMAIL_PP_ADDRESS",
         "prompt": "Email address",
@@ -172,6 +208,10 @@ CHANNEL_ENV = (
 )
 
 _CONFIG_KEYS = {
+    "EMAIL_PP_LOGIN": "login",
+    "EMAIL_PP_COLLABORATION": "collaboration",
+    "EMAIL_PP_BACKCHANNEL_TARGET": "backchannel_target",
+    "EMAIL_PP_BACKCHANNEL_OWNER": "backchannel_owner",
     "EMAIL_PP_ADDRESS": "address",
     "EMAIL_PP_PASSWORD": "password",
     "EMAIL_PP_IMAP_HOST": "imap_host",

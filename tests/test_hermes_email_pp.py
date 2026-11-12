@@ -208,7 +208,11 @@ def test_registers_all_channel_metadata_with_vanilla_hermes(monkeypatch) -> None
 def test_vanilla_channels_discovers_all_email_pp_settings(monkeypatch) -> None:
     from gateway.platform_registry import PlatformEntry
     from hermes_cli.config import OPTIONAL_ENV_VARS
-    from hermes_cli.web_server import _build_catalog_entry
+
+    try:
+        from hermes_cli.web_server_messaging import _build_catalog_entry
+    except ImportError:
+        from hermes_cli.web_server import _build_catalog_entry
 
     for field in CHANNEL_ENV:
         monkeypatch.delitem(OPTIONAL_ENV_VARS, field["name"], raising=False)

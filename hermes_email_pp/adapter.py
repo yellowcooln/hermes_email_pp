@@ -281,6 +281,9 @@ class EmailPPAdapter(BasePlatformAdapter):
         extra = getattr(config, "extra", {}) or {}
         settings = environment_settings()
         self._address = self._setting(settings, extra, "EMAIL_PP_ADDRESS", "address")
+        self._login = (
+            self._setting(settings, extra, "EMAIL_PP_LOGIN", "login") or self._address
+        )
         self._password = self._setting(settings, extra, "EMAIL_PP_PASSWORD", "password")
         self._imap_host = self._setting(
             settings, extra, "EMAIL_PP_IMAP_HOST", "imap_host"
@@ -626,7 +629,7 @@ class EmailPPAdapter(BasePlatformAdapter):
         if self._imap is None:
             imap = imaplib.IMAP4_SSL(self._imap_host, self._imap_port, timeout=30)
             try:
-                imap.login(self._address, self._password)
+                imap.login(self._login, self._password)
             except BaseException:
                 self._close_imap(imap)
                 raise
@@ -773,7 +776,7 @@ class EmailPPAdapter(BasePlatformAdapter):
     def _probe_smtp(self) -> None:
         smtp = self._smtp()
         try:
-            smtp.login(self._address, self._password)
+            smtp.login(self._login, self._password)
         finally:
             smtp.quit()
 
@@ -1553,7 +1556,7 @@ class EmailPPAdapter(BasePlatformAdapter):
         # isolated rather than retrying or reusing a session with ambiguous state.
         smtp = self._smtp()
         try:
-            smtp.login(self._address, self._password)
+            smtp.login(self._login, self._password)
             smtp.send_message(message)
         finally:
             try:

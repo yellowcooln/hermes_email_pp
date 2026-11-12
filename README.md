@@ -1,5 +1,13 @@
 # Hermes Email++
 
+> **Collaboration development fork:** this branch adds explicitly invoked group
+> email, alias authentication, reply-all and durable private owner clarification.
+> It runs on the existing Hermes host without an additional container.
+> See [collaboration setup, operation and verification](docs/collaboration.md).
+> The upstream installation/release instructions below describe the original
+> project; its published PyPI package does not contain these fork changes.
+> This fork's development build is not a published release.
+
 [![PyPI](https://img.shields.io/pypi/v/hermes-email-pp.svg)](https://pypi.org/project/hermes-email-pp/)
 [![Release](https://github.com/JNevrly/hermes_email_pp/actions/workflows/release.yml/badge.svg)](https://github.com/JNevrly/hermes_email_pp/actions/workflows/release.yml)
 

@@ -20,6 +20,15 @@ def check_requirements() -> bool:
 
 def create_adapter(config: Any) -> Any:
     """Load the transport only when the gateway creates the Email++ adapter."""
+    from .config import environment_settings
+
+    extra = getattr(config, "extra", {}) or {}
+    collaboration = environment_settings().get(
+        "EMAIL_PP_COLLABORATION", str(extra.get("collaboration", "false"))
+    )
+    if collaboration.lower() in {"1", "true", "yes", "on"}:
+        module = import_module(".collaboration", package=__package__)
+        return module.CollaborationAdapter(config)
     adapter_module = import_module(".adapter", package=__package__)
     return adapter_module.EmailPPAdapter(config)
 
@@ -27,10 +36,14 @@ def create_adapter(config: Any) -> Any:
 def register(ctx: Any) -> None:
     """Register Email++ without touching Hermes' built-in email platform."""
     _register_channel_env_metadata()
+    from .runtime import CollaborationRuntime
+
+    runtime = CollaborationRuntime(ctx)
+    runtime.register()
     registration: dict[str, Any] = {
         "name": "email_pp",
         "label": "Email++",
-        "adapter_factory": create_adapter,
+        "adapter_factory": runtime.factory,
         "check_fn": check_requirements,
         "validate_config": is_configured,
         "is_connected": is_configured,
